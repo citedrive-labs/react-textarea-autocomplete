@@ -310,8 +310,57 @@ class App extends React.Component {
               dataProvider: token =>
                 new Promise(res =>
                   setTimeout(() => {
-                    res([{ name: "jakub", char: "Jakub" }]);
-                  }, 1000)
+                    res([
+                      {
+                        name: "",
+                        char: "@article{key*,\n  title={},\n  author={}\n}"
+                      },
+                      {
+                        name: "",
+                        char: "@misc{key*,\n title={},\n author={}\n}"
+                      }
+                    ]);
+                  }, 1)
+                ),
+              component: Item,
+              output: {
+                start: this._outputCaretStart,
+                end: this._outputCaretEnd,
+                next: this._outputCaretDefault
+              }[optionsCaret]
+            },
+            "@a": {
+              dataProvider: token =>
+                new Promise(res =>
+                  setTimeout(() => {
+                    res([
+
+                      {
+                        name: "",
+                        char: "@article{key*,\n  title={},\n  author={}\n}"
+                      }
+                    ]);
+                  }, 1)
+                ),
+              component: Item,
+              output: {
+                start: this._outputCaretStart,
+                end: this._outputCaretEnd,
+                next: this._outputCaretDefault
+              }[optionsCaret]
+            },
+            "@m": {
+              dataProvider: token =>
+                new Promise(res =>
+                  setTimeout(() => {
+                    res([
+
+                      {
+                        name: "",
+                        char: "@misc{key*,\n title={},\n author={}\n}"
+                      }
+                    ]);
+                  }, 1)
                 ),
               component: Item,
               output: {
@@ -324,8 +373,8 @@ class App extends React.Component {
             "[": {
               dataProvider: token => {
                 /**
-                  Let's pass token to state to easily test it in Cypress 
-                  We going to test that we get also whitespace because this trigger has set "allowWhitespace"  
+                  Let's pass token to state to easily test it in Cypress
+                  We going to test that we get also whitespace because this trigger has set "allowWhitespace"
                  */
                 this.setState({ actualTokenInProvider: token });
                 return [
@@ -368,13 +417,14 @@ class App extends React.Component {
               output: this._outputCaretEnd
             },
             "/filter": {
-              dataProvider: token => [
-                { name: "a", char: "amy" },
-                { name: "b", char: "ben" },
-                { name: "c", char: "cheryl" },
-                { name: "d", char: "daniel" },
-                { name: "e", char: "emily" }
-              ].filter(x => x.name == token.slice(6) || token.length === 6),
+              dataProvider: token =>
+                [
+                  { name: "a", char: "amy" },
+                  { name: "b", char: "ben" },
+                  { name: "c", char: "cheryl" },
+                  { name: "d", char: "daniel" },
+                  { name: "e", char: "emily" }
+                ].filter(x => x.name == token.slice(6) || token.length === 6),
               component: Item,
               output: this._outputCaretEnd
             },
@@ -421,7 +471,7 @@ class App extends React.Component {
               },
               component: Item,
               output: this._outputCaretEnd
-            },
+            }
           }}
         />
         {!showSecondTextarea ? null : (
